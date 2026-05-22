@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { ShoppingBag, Eye } from 'lucide-react'
 import { Product } from '@/types'
@@ -18,6 +19,7 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
   const [imgError,     setImgError]     = useState(false)
   const [quickAdded,   setQuickAdded]   = useState(false)
   const { addItem }                     = useCartStore()
+  const router                          = useRouter()
 
   const primaryColor = product.colors[0]
   const primarySize  = product.sizes[0]
@@ -118,13 +120,12 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
                 </span>
               </motion.button>
 
-              <Link
-                href={`/produto/${product.id}`}
-                onClick={(e) => e.stopPropagation()}
+              <button
+                onClick={(e) => { e.preventDefault(); e.stopPropagation(); router.push(`/produto/${product.id}`) }}
                 className="w-10 h-10 bg-white/10 backdrop-blur-sm flex items-center justify-center border border-white/10 hover:bg-white/20 transition-colors cursor-pointer"
               >
                 <Eye size={14} className="text-white" />
-              </Link>
+              </button>
             </motion.div>
 
             {/* Bottom gradient */}

@@ -93,8 +93,8 @@ export const DEMO_PRODUCTS = [
     description: 'Moletom pesado com capuz duplo. Para os dias de treino na madrugada e nas ruas.',
     price: 289.90,
     images: [
-      'https://images.unsplash.com/photo-1556821840-3a63f15732ce?w=800&q=80',
-      'https://images.unsplash.com/photo-1509942774463-acf339cf87d5?w=800&q=80',
+      'https://images.unsplash.com/photo-1578587018452-892bacefd3f2?w=800&q=80',
+      'https://images.unsplash.com/photo-1516826957135-700dedafdef9?w=800&q=80',
     ],
     sizes: ['P', 'M', 'G', 'GG'],
     colors: [
@@ -112,8 +112,8 @@ export const DEMO_PRODUCTS = [
     description: 'Shorts técnico com bolsos laterais. Do treino à rua sem trocar de roupa.',
     price: 169.90,
     images: [
-      'https://images.unsplash.com/photo-1591195853828-11db59a44f43?w=800&q=80',
-      'https://images.unsplash.com/photo-1556306535-0f09a537f0a3?w=800&q=80',
+      'https://images.unsplash.com/photo-1539185441755-769473a23570?w=800&q=80',
+      'https://images.unsplash.com/photo-1571731956672-f2b94d7dd0cb?w=800&q=80',
     ],
     sizes: ['P', 'M', 'G', 'GG'],
     colors: [
