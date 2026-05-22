@@ -4,6 +4,7 @@ import { useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import Link from 'next/link'
 import { ArrowDown, Zap } from 'lucide-react'
+import { BRAND_CONFIG } from '@/lib/config'
 
 const PHRASES = [
   'DISCIPLINA',
@@ -156,7 +157,7 @@ export default function Hero() {
             VER COLEÇÃO
           </Link>
           <a
-            href={`https://wa.me/5511999999999?text=${encodeURIComponent('Olá! Vi o site da AESTHIX FIT e quero saber mais.')}`}
+            href={`https://wa.me/${BRAND_CONFIG.whatsappNumber}?text=${encodeURIComponent('Olá! Vi o site da AESTHIX FIT e quero saber mais.')}`}
             target="_blank"
             rel="noopener noreferrer"
             className="btn-outline"

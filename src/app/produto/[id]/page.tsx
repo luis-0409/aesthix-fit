@@ -15,7 +15,7 @@ import {
 } from 'lucide-react'
 import { Product } from '@/types'
 import { useCartStore } from '@/lib/cart-store'
-import { DEMO_PRODUCTS } from '@/lib/config'
+import { DEMO_PRODUCTS, BRAND_CONFIG } from '@/lib/config'
 import Navbar from '@/components/Navbar'
 import WhatsAppButton from '@/components/WhatsAppButton'
 import Cart from '@/components/Cart'
@@ -364,7 +364,7 @@ export default function ProductPage() {
 
               {/* WhatsApp direct */}
               <a
-                href={`https://wa.me/5511999999999?text=${encodeURIComponent(
+                href={`https://wa.me/${BRAND_CONFIG.whatsappNumber}?text=${encodeURIComponent(
                   `Olá! Tenho interesse no produto: ${product.name} | Cor: ${color.name} | Tamanho: ${selectedSize}`
                 )}`}
                 target="_blank"
