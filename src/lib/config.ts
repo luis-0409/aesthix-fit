@@ -10,7 +10,7 @@ export const BRAND_CONFIG = {
   instagramUrl: 'https://instagram.com/aesthix.fitt',
 
   // WhatsApp — substitua pelo número real (somente dígitos, com DDI)
-  whatsappNumber: '5511999999999',
+  whatsappNumber: '5585987408431',
 
   // Mensagem de intro antes dos produtos
   whatsappIntro: 'Olá! Quero fazer um pedido na AESTHIX FIT:',
