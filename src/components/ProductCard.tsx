@@ -25,6 +25,7 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
   const primarySize  = product.sizes[0]
   const image1       = product.images[0] || ''
 
+  // Só dispara no desktop (não abre carrinho em touch)
   const handleQuickAdd = (e: React.MouseEvent) => {
     e.preventDefault()
     e.stopPropagation()
@@ -38,7 +39,7 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
     currency: 'BRL',
   })
 
-  // ── Coming Soon card ──────────────────────────────────────────
+  // ── Coming Soon ───────────────────────────────────────────────
   if (product.coming_soon) {
     return (
       <motion.div
@@ -48,34 +49,23 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
         transition={{ duration: 0.6, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
       >
         <div className="card-dark overflow-hidden opacity-70 cursor-not-allowed select-none">
-          {/* Image container */}
           <div className="relative aspect-[3/4] overflow-hidden bg-gray-900">
-            {/* Blur overlay */}
             <div className="absolute inset-0 z-10 backdrop-blur-sm bg-black/50 flex flex-col items-center justify-center gap-3">
               <span className="text-3xl">🔥</span>
               <span className="font-anton text-white text-xl tracking-[0.2em] uppercase">Em Breve</span>
               <span className="font-epilogue text-[10px] text-white/40 tracking-[0.25em] uppercase">Em lançamento</span>
             </div>
-            {/* Blurred background image */}
             <div className="absolute inset-0 flex items-center justify-center bg-gray-950">
               <span className="font-anton text-6xl text-white/5">AF</span>
             </div>
           </div>
-          {/* Info */}
-          <div className="p-4">
-            <h3 className="font-epilogue text-sm font-semibold text-white/40 leading-tight mb-1">
+          <div className="p-3 md:p-4">
+            <h3 className="font-epilogue text-xs md:text-sm font-semibold text-white/40 leading-tight mb-1">
               {product.category}
             </h3>
-            <p className="font-epilogue text-xs text-white/20 leading-relaxed mb-3">
-              Em breve 🔥
-            </p>
-            <div className="flex items-center justify-between">
-              <span className="font-anton text-sm tracking-wide text-white/20">
-                — — —
-              </span>
-            </div>
+            <p className="font-epilogue text-[10px] md:text-xs text-white/20 mb-2">Em breve 🔥</p>
+            <span className="font-anton text-sm tracking-wide text-white/20">— — —</span>
           </div>
-          {/* Animated bottom line */}
           <div className="h-px bg-gradient-to-r from-transparent via-red-DEFAULT/40 to-transparent animate-pulse" />
         </div>
       </motion.div>
@@ -89,38 +79,35 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
       viewport={{ once: true, margin: '-50px' }}
       transition={{ duration: 0.6, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
     >
-      <Link href={`/produto/${product.id}`} className="group block cursor-pointer">
+      <Link href={`/produto/${product.id}`} className="group block">
         <div
           className="card-dark overflow-hidden glow-card-hover"
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
         >
-          {/* Image container */}
+          {/* ── Imagem ────────────────────────────────────── */}
           <div className="relative aspect-[3/4] overflow-hidden bg-gray-900">
 
-            {/* Featured badge */}
             {product.featured && (
-              <div className="absolute top-3 left-3 z-10 px-2 py-0.5 bg-red-DEFAULT">
-                <span className="font-anton text-[9px] tracking-[0.2em] text-white uppercase">
+              <div className="absolute top-2 left-2 md:top-3 md:left-3 z-10 px-2 py-0.5 bg-red-DEFAULT">
+                <span className="font-anton text-[8px] md:text-[9px] tracking-[0.2em] text-white uppercase">
                   Destaque
                 </span>
               </div>
             )}
 
-            {/* Image */}
             {!imgError && image1 ? (
               <Image
                 src={image1}
                 alt={product.name}
                 fill
-                sizes="(max-width: 768px) 50vw, 33vw"
+                sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
                 className={`object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
                   hovered ? 'scale-105' : 'scale-100'
                 }`}
                 onError={() => setImgError(true)}
               />
             ) : (
-              /* Placeholder */
               <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-950">
                 <span className="font-anton text-4xl text-white/10">AF</span>
                 <span className="font-epilogue text-[10px] text-white/20 mt-2 tracking-widest uppercase">
@@ -129,16 +116,20 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
               </div>
             )}
 
-            {/* Hover overlay */}
-            <motion.div
-              animate={{ opacity: hovered ? 1 : 0 }}
-              transition={{ duration: 0.3 }}
-              className="absolute inset-0 bg-black/40 flex items-end justify-center pb-6 gap-3"
+            {/*
+              Overlay de hover — APENAS desktop (pointer-events-none no mobile).
+              No touch, mouseenter dispara brevemente e o tap batia no Quick Add.
+              Solução: pointer-events-none sempre no mobile via CSS.
+            */}
+            <div
+              className={`absolute inset-0 bg-black/40 flex items-end justify-center pb-4 md:pb-6 gap-2 md:gap-3
+                pointer-events-none
+                md:transition-opacity md:duration-300
+                ${hovered ? 'md:opacity-100 md:pointer-events-auto' : 'md:opacity-0'}`}
             >
-              <motion.button
+              <button
                 onClick={handleQuickAdd}
-                whileTap={{ scale: 0.94 }}
-                className="flex items-center gap-2 bg-red-DEFAULT px-4 py-2.5 cursor-pointer"
+                className="hidden md:flex items-center gap-2 bg-red-DEFAULT px-4 py-2.5 cursor-pointer"
                 style={{
                   clipPath: 'polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px))',
                 }}
@@ -147,29 +138,28 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
                 <span className="font-anton text-[11px] tracking-[0.15em] text-white uppercase">
                   {quickAdded ? 'Adicionado!' : `${primarySize} — Quick Add`}
                 </span>
-              </motion.button>
+              </button>
 
               <button
                 onClick={(e) => { e.preventDefault(); e.stopPropagation(); router.push(`/produto/${product.id}`) }}
-                className="w-10 h-10 bg-white/10 backdrop-blur-sm flex items-center justify-center border border-white/10 hover:bg-white/20 transition-colors cursor-pointer"
+                className="hidden md:flex w-10 h-10 bg-white/10 backdrop-blur-sm items-center justify-center border border-white/10 hover:bg-white/20 transition-colors cursor-pointer"
               >
                 <Eye size={14} className="text-white" />
               </button>
-            </motion.div>
+            </div>
 
-            {/* Bottom gradient */}
-            <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-black/60 to-transparent pointer-events-none" />
+            <div className="absolute bottom-0 left-0 right-0 h-16 md:h-24 bg-gradient-to-t from-black/60 to-transparent pointer-events-none" />
           </div>
 
-          {/* Info */}
-          <div className="p-4">
+          {/* ── Info ──────────────────────────────────────── */}
+          <div className="p-3 md:p-4">
             {/* Color dots */}
-            <div className="flex items-center gap-1.5 mb-3">
+            <div className="flex items-center gap-1 md:gap-1.5 mb-2 md:mb-3">
               {product.colors.slice(0, 4).map((color) => (
                 <div
                   key={color.name}
                   title={color.name}
-                  className="w-3 h-3 rounded-full border border-white/10"
+                  className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full border border-white/10"
                   style={{ backgroundColor: color.hex }}
                 />
               ))}
@@ -181,26 +171,25 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
             </div>
 
             {/* Name */}
-            <h3 className="font-epilogue text-sm font-semibold text-white/90 leading-tight mb-1 line-clamp-2 group-hover:text-white transition-colors">
+            <h3 className="font-epilogue text-xs md:text-sm font-semibold text-white/90 leading-tight mb-1 line-clamp-2 group-hover:text-white transition-colors">
               {product.name}
             </h3>
 
-            {/* Description */}
-            <p className="font-epilogue text-xs text-white/35 leading-relaxed line-clamp-2 mb-3">
+            {/* Description — hidden on mobile to economizar espaço */}
+            <p className="hidden md:block font-epilogue text-xs text-white/35 leading-relaxed line-clamp-2 mb-3">
               {product.description}
             </p>
 
-            {/* Price row */}
-            <div className="flex items-center justify-between">
-              <span className="font-anton text-lg tracking-wide text-white">
+            {/* Price + sizes */}
+            <div className="flex items-center justify-between mt-2 md:mt-0">
+              <span className="font-anton text-base md:text-lg tracking-wide text-white">
                 {priceFormatted}
               </span>
-              {/* Size pills */}
-              <div className="flex items-center gap-1">
+              <div className="flex items-center gap-0.5 md:gap-1">
                 {product.sizes.slice(0, 3).map((size) => (
                   <span
                     key={size}
-                    className="font-epilogue text-[9px] font-semibold tracking-wider text-white/30 border border-white/10 px-1.5 py-0.5 uppercase"
+                    className="font-epilogue text-[8px] md:text-[9px] font-semibold tracking-wider text-white/30 border border-white/10 px-1 md:px-1.5 py-0.5 uppercase"
                   >
                     {size}
                   </span>
@@ -209,11 +198,11 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
             </div>
           </div>
 
-          {/* Bottom accent line */}
-          <motion.div
-            animate={{ scaleX: hovered ? 1 : 0 }}
-            transition={{ duration: 0.3 }}
-            className="h-px bg-red-DEFAULT origin-left"
+          {/* Linha vermelha hover */}
+          <div
+            className={`h-px bg-red-DEFAULT origin-left transition-transform duration-300 ${
+              hovered ? 'scale-x-100' : 'scale-x-0'
+            }`}
           />
         </div>
       </Link>
