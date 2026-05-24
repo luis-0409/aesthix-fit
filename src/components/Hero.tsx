@@ -1,160 +1,149 @@
 'use client'
 
-import { useRef } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { ArrowDown, Zap } from 'lucide-react'
+import { ArrowRight, Zap, ArrowDown } from 'lucide-react'
 import { BRAND_CONFIG } from '@/lib/config'
 
-const PHRASES = [
-  'DISCIPLINA',
-  'FOCO',
-  'EVOLUÇÃO',
-  'ESTILO',
-  'PERFORMANCE',
-  'IDENTIDADE',
-]
+// ── Ticket strip words
+const TICKER = ['DISCIPLINA', 'FOCO', 'EVOLUÇÃO', 'ESTILO', 'PERFORMANCE', 'IDENTIDADE']
 
-const MotionWords = ['DISCIPLINA', 'VIRA', 'ESTILO.']
+// ── Fast stagger variants — sem useScroll, sem useTransform
+const container = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.07, delayChildren: 0.05 } },
+}
+const item = {
+  hidden:  { opacity: 0, y: 44 },
+  show:    { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.16, 1, 0.3, 1] } },
+}
+const fadeIn = {
+  hidden:  { opacity: 0 },
+  show:    { opacity: 1, transition: { duration: 0.7, delay: 0.55 } },
+}
 
 export default function Hero() {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const { scrollYProgress } = useScroll({ target: containerRef })
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
-  const y       = useTransform(scrollYProgress, [0, 0.5], [0, 80])
-
   return (
-    <section
-      ref={containerRef}
-      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden"
-    >
-      {/* Deep background */}
-      <div className="absolute inset-0 bg-[#050505]" />
+    <section className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-[#050505]">
 
-      {/* Grid pattern */}
+      {/* ── Background grid ───────────────────────────── */}
       <div
-        className="absolute inset-0 opacity-[0.03]"
+        className="absolute inset-0 pointer-events-none"
         style={{
           backgroundImage: `
-            linear-gradient(rgba(255,26,26,1) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255,26,26,1) 1px, transparent 1px)
+            linear-gradient(rgba(255,26,26,0.04) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,26,26,0.04) 1px, transparent 1px)
           `,
           backgroundSize: '80px 80px',
         }}
       />
 
-      {/* Red radial glow — top center */}
+      {/* ── Red radial — top center ───────────────────── */}
       <div
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px] pointer-events-none"
-        style={{
-          background: 'radial-gradient(ellipse at center top, rgba(255,26,26,0.18) 0%, transparent 70%)',
-        }}
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse at center top, rgba(255,26,26,0.14) 0%, transparent 68%)' }}
       />
 
-      {/* Red radial glow — bottom */}
+      {/* ── Red radial — bottom left ──────────────────── */}
       <div
-        className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] pointer-events-none"
-        style={{
-          background: 'radial-gradient(ellipse at center bottom, rgba(255,26,26,0.08) 0%, transparent 70%)',
-        }}
+        className="absolute -bottom-20 -left-40 w-[500px] h-[400px] pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse, rgba(255,26,26,0.07) 0%, transparent 70%)' }}
       />
 
-      {/* Vertical red line — left */}
+      {/* ── Left accent line ──────────────────────────── */}
       <motion.div
         initial={{ scaleY: 0 }}
         animate={{ scaleY: 1 }}
-        transition={{ duration: 1.5, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-        className="absolute left-8 md:left-16 top-0 bottom-0 w-px origin-top"
-        style={{ background: 'linear-gradient(to bottom, transparent, rgba(255,26,26,0.5), transparent)' }}
-      />
-      {/* Vertical red line — right */}
-      <motion.div
-        initial={{ scaleY: 0 }}
-        animate={{ scaleY: 1 }}
-        transition={{ duration: 1.5, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-        className="absolute right-8 md:right-16 top-0 bottom-0 w-px origin-bottom"
-        style={{ background: 'linear-gradient(to top, transparent, rgba(255,26,26,0.3), transparent)' }}
+        transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+        className="absolute left-0 top-0 bottom-0 w-[3px] origin-top pointer-events-none"
+        style={{ background: 'linear-gradient(to bottom, #ff1a1a 0%, rgba(255,26,26,0.3) 50%, transparent 100%)' }}
       />
 
-      {/* Main content */}
-      <motion.div
-        style={{ opacity, y }}
-        className="relative z-10 flex flex-col items-center text-center px-4 max-w-6xl mx-auto"
+      {/* ── Ghost "AX" background text ────────────────── */}
+      <div
+        className="absolute right-[-2vw] top-1/2 -translate-y-[55%] pointer-events-none select-none hidden md:block"
+        aria-hidden
       >
+        <span
+          className="font-anton leading-none"
+          style={{
+            fontSize: 'clamp(18rem, 28vw, 34rem)',
+            color: 'transparent',
+            WebkitTextStroke: '1px rgba(255,26,26,0.055)',
+            letterSpacing: '-0.04em',
+          }}
+        >
+          AX
+        </span>
+      </div>
+
+      {/* ── Main content ──────────────────────────────── */}
+      <motion.div
+        variants={container}
+        initial="hidden"
+        animate="show"
+        className="relative z-10 container-max px-6 md:px-8 pt-28 pb-32"
+      >
+
         {/* Badge */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="inline-flex items-center gap-2 mb-10 px-4 py-1.5 border border-red-DEFAULT/30 bg-red-DEFAULT/5"
-        >
-          <Zap size={10} fill="#ff1a1a" className="text-red-DEFAULT" />
-          <span className="font-epilogue text-[10px] font-semibold tracking-[0.3em] text-red-DEFAULT uppercase">
-            Nova Coleção Disponível
+        <motion.div variants={item}>
+          <div className="inline-flex items-center gap-2 mb-10 px-3 py-1.5 border border-red-DEFAULT/30 bg-red-DEFAULT/5">
+            <Zap size={10} fill="#ff1a1a" className="text-red-DEFAULT" />
+            <span className="font-epilogue text-[10px] font-semibold tracking-[0.35em] text-red-DEFAULT uppercase">
+              Nova Coleção Disponível
+            </span>
+            <Zap size={10} fill="#ff1a1a" className="text-red-DEFAULT" />
+          </div>
+        </motion.div>
+
+        {/* Headline — DISCIPLINA */}
+        <motion.div variants={item}>
+          <span
+            className="block font-anton leading-[0.88] tracking-[-0.03em] text-white"
+            style={{ fontSize: 'clamp(4.5rem, 13vw, 11.5rem)' }}
+          >
+            DISCIPLINA
           </span>
-          <Zap size={10} fill="#ff1a1a" className="text-red-DEFAULT" />
         </motion.div>
 
-        {/* Main headline — word by word */}
-        <div className="mb-4">
-          {MotionWords.map((word, i) => (
-            <motion.span
-              key={word}
-              initial={{ opacity: 0, y: 60, skewX: -5 }}
-              animate={{ opacity: 1, y: 0, skewX: 0 }}
-              transition={{
-                duration: 0.8,
-                delay: 0.4 + i * 0.12,
-                ease: [0.16, 1, 0.3, 1],
-              }}
-              className="inline-block mr-4 md:mr-6 font-anton text-[clamp(4rem,12vw,10rem)] leading-[0.88] tracking-[-0.02em] text-white"
-              style={
-                word === 'VIRA'
-                  ? {
-                      color: 'transparent',
-                      WebkitTextStroke: '1px rgba(255,255,255,0.3)',
-                    }
-                  : {}
-              }
-            >
-              {word}
-            </motion.span>
-          ))}
-        </div>
+        {/* Headline — VIRA (outlined) */}
+        <motion.div variants={item}>
+          <span
+            className="block font-anton leading-[0.88] tracking-[-0.03em]"
+            style={{
+              fontSize: 'clamp(4.5rem, 13vw, 11.5rem)',
+              color: 'transparent',
+              WebkitTextStroke: '2px rgba(255,255,255,0.22)',
+            }}
+          >
+            VIRA
+          </span>
+        </motion.div>
 
-        {/* Sub headline */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.9 }}
-          className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 mb-10"
+        {/* Headline — ESTILO. */}
+        <motion.div variants={item} className="mb-10">
+          <span
+            className="block font-anton leading-[0.88] tracking-[-0.03em] text-red-DEFAULT"
+            style={{ fontSize: 'clamp(4.5rem, 13vw, 11.5rem)' }}
+          >
+            ESTILO.
+          </span>
+        </motion.div>
+
+        {/* Sub copy */}
+        <motion.p
+          variants={item}
+          className="font-epilogue text-sm md:text-base text-white/40 tracking-[0.12em] uppercase leading-relaxed mb-10 max-w-sm"
         >
-          {['NÃO É SÓ ROUPA.', 'É IDENTIDADE.', 'A NOVA ERA CHEGOU.'].map(
-            (phrase, i) => (
-              <span
-                key={phrase}
-                className="font-epilogue text-sm md:text-base font-medium tracking-[0.15em] uppercase"
-                style={{
-                  color: i === 0 ? 'rgba(255,255,255,0.7)' :
-                         i === 1 ? 'rgba(255,26,26,0.9)'   :
-                                   'rgba(255,255,255,0.4)',
-                }}
-              >
-                {phrase}
-              </span>
-            )
-          )}
-        </motion.div>
+          Roupas fitness streetwear premium.<br />
+          Identidade que se impõe.
+        </motion.p>
 
         {/* CTAs */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 1.1 }}
-          className="flex flex-col sm:flex-row items-center gap-4"
-        >
-          <Link href="#colecao" className="btn-primary">
+        <motion.div variants={item} className="flex flex-col sm:flex-row gap-4 mb-16">
+          <Link href="#colecao" className="btn-primary inline-flex items-center gap-2">
             VER COLEÇÃO
+            <ArrowRight size={16} />
           </Link>
           <a
             href={`https://wa.me/${BRAND_CONFIG.whatsappNumber}?text=${encodeURIComponent('Olá! Vi o site da AESTHIX FIT e quero saber mais.')}`}
@@ -168,15 +157,13 @@ export default function Hero() {
 
         {/* Stats */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 1.4 }}
-          className="flex items-center gap-10 mt-16 pt-10 border-t border-white/5"
+          variants={fadeIn}
+          className="flex items-center gap-8 md:gap-12 pt-8 border-t border-white/5"
         >
           {[
             { value: '100%',  label: 'Algodão Premium' },
-            { value: 'DROP',  label: 'Exclusivo' },
-            { value: '48H',   label: 'Envio Rápido' },
+            { value: 'DROP',  label: 'Exclusivo'       },
+            { value: '48H',   label: 'Envio Rápido'    },
           ].map((stat) => (
             <div key={stat.value} className="text-center">
               <div className="font-anton text-2xl md:text-3xl tracking-widest text-red-DEFAULT">
@@ -190,40 +177,41 @@ export default function Hero() {
         </motion.div>
       </motion.div>
 
-      {/* Scroll indicator */}
+      {/* ── Scroll indicator ──────────────────────────── */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 2 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+        transition={{ delay: 1.2 }}
+        className="absolute bottom-20 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
       >
         <motion.div
           animate={{ y: [0, 6, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+          transition={{ duration: 1.4, repeat: Infinity, ease: 'easeInOut' }}
         >
           <ArrowDown size={16} className="text-white/30" />
         </motion.div>
-        <span className="font-epilogue text-[9px] tracking-[0.3em] text-white/20 uppercase">
+        <span className="font-epilogue text-[9px] tracking-[0.35em] text-white/20 uppercase">
           Scroll
         </span>
       </motion.div>
 
-      {/* Bottom marquee strip */}
-      <div className="absolute bottom-0 left-0 right-0 border-t border-white/5 overflow-hidden py-2 bg-red-DEFAULT/5">
+      {/* ── Bottom marquee strip ──────────────────────── */}
+      <div className="absolute bottom-0 left-0 right-0 border-t border-white/5 overflow-hidden py-2.5 bg-red-DEFAULT/5">
         <div className="marquee-container">
           <div className="marquee-track">
-            {[...PHRASES, ...PHRASES].map((phrase, i) => (
+            {[...TICKER, ...TICKER].map((word, i) => (
               <span
                 key={i}
                 className="font-anton text-xs tracking-[0.3em] text-white/20 uppercase mx-8 whitespace-nowrap"
               >
-                {phrase}
+                {word}
                 <span className="text-red-DEFAULT mx-4">×</span>
               </span>
             ))}
           </div>
         </div>
       </div>
+
     </section>
   )
 }

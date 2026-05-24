@@ -37,6 +37,8 @@ export const DEMO_PRODUCTS = [
     images: [
       '/products/the-king-frente.jpg',
       '/products/the-king-costas.jpg',
+      'https://images.unsplash.com/photo-1562157873-818bc0726f68?w=800&q=80',
+      'https://images.unsplash.com/photo-1503341504253-dff4815485f1?w=800&q=80',
     ],
     sizes: ['P', 'M', 'G', 'GG'],
     colors: [
@@ -55,6 +57,8 @@ export const DEMO_PRODUCTS = [
     images: [
       '/products/mentality-frente.jpg',
       '/products/mentality-costas.jpg',
+      'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=800&q=80',
+      'https://images.unsplash.com/photo-1527719327859-c6ce80353573?w=800&q=80',
     ],
     sizes: ['P', 'M', 'G', 'GG'],
     colors: [
@@ -73,6 +77,8 @@ export const DEMO_PRODUCTS = [
     images: [
       '/products/disciplina-frente.jpg',
       '/products/disciplina-costas.jpg',
+      'https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=800&q=80',
+      'https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=800&q=80',
     ],
     sizes: ['P', 'M', 'G', 'GG'],
     colors: [
@@ -91,6 +97,8 @@ export const DEMO_PRODUCTS = [
     images: [
       '/products/messiah-frente.jpg',
       '/products/messiah-costas.jpg',
+      'https://images.unsplash.com/photo-1622519407650-3df9883f76a5?w=800&q=80',
+      'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&q=80',
     ],
     sizes: ['P', 'M', 'G', 'GG'],
     colors: [
@@ -109,6 +117,8 @@ export const DEMO_PRODUCTS = [
     images: [
       '/products/faltou-carbo-preto-frente.jpg',
       '/products/faltou-carbo-preto-costas.jpg',
+      'https://images.unsplash.com/photo-1578587018452-892bacefd3f2?w=800&q=80',
+      'https://images.unsplash.com/photo-1516826957135-700dedafdef9?w=800&q=80',
     ],
     sizes: ['P', 'M', 'G', 'GG'],
     colors: [
@@ -127,6 +137,8 @@ export const DEMO_PRODUCTS = [
     images: [
       '/products/faltou-carbo-branco-frente.jpg',
       '/products/faltou-carbo-branco-costas.jpg',
+      'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=800&q=80',
+      'https://images.unsplash.com/photo-1503341504253-dff4815485f1?w=800&q=80',
     ],
     sizes: ['P', 'M', 'G', 'GG'],
     colors: [
