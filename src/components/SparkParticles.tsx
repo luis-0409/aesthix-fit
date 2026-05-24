@@ -22,21 +22,25 @@ export default function SparkParticles() {
     const ctx = canvas.getContext('2d')
     if (!ctx) return
 
+    // Referências sem null para usar dentro das closures
+    const cvs = canvas as HTMLCanvasElement
+    const c   = ctx    as CanvasRenderingContext2D
+
     let raf: number
     const embers: Ember[] = []
     const MAX_EMBERS = 65
 
     const resize = () => {
-      canvas.width  = window.innerWidth
-      canvas.height = window.innerHeight
+      cvs.width  = window.innerWidth
+      cvs.height = window.innerHeight
     }
     resize()
     window.addEventListener('resize', resize)
 
     function spawn(): Ember {
       return {
-        x:       Math.random() * canvas.width,
-        y:       canvas.height * 0.4 + Math.random() * canvas.height * 0.6,
+        x:       Math.random() * cvs.width,
+        y:       cvs.height * 0.4 + Math.random() * cvs.height * 0.6,
         vx:      (Math.random() - 0.5) * 1.1,
         vy:      -(Math.random() * 1.6 + 0.5),
         life:    0,
@@ -50,12 +54,12 @@ export default function SparkParticles() {
     for (let i = 0; i < MAX_EMBERS; i++) {
       const e = spawn()
       e.life = Math.random() * e.maxLife
-      e.y    = Math.random() * canvas.height
+      e.y    = Math.random() * cvs.height
       embers.push(e)
     }
 
     function tick() {
-      ctx!.clearRect(0, 0, canvas.width, canvas.height)
+      c.clearRect(0, 0, cvs.width, cvs.height)
 
       // Spawn new embers gradually
       if (embers.length < MAX_EMBERS && Math.random() < 0.35) {
@@ -81,21 +85,21 @@ export default function SparkParticles() {
 
         // --- outer glow ---
         const r = e.size * 3.5
-        const grd = ctx!.createRadialGradient(e.x, e.y, 0, e.x, e.y, r)
+        const grd = c.createRadialGradient(e.x, e.y, 0, e.x, e.y, r)
         grd.addColorStop(0,   `hsla(${15 + e.hue}, 100%, 65%, ${alpha})`)
         grd.addColorStop(0.5, `hsla(${e.hue},     100%, 50%, ${alpha * 0.5})`)
         grd.addColorStop(1,   `hsla(${e.hue},     100%, 40%, 0)`)
 
-        ctx!.beginPath()
-        ctx!.arc(e.x, e.y, r, 0, Math.PI * 2)
-        ctx!.fillStyle = grd
-        ctx!.fill()
+        c.beginPath()
+        c.arc(e.x, e.y, r, 0, Math.PI * 2)
+        c.fillStyle = grd
+        c.fill()
 
         // --- core bright dot ---
-        ctx!.beginPath()
-        ctx!.arc(e.x, e.y, e.size * 0.55, 0, Math.PI * 2)
-        ctx!.fillStyle = `hsla(${30 + e.hue}, 100%, 85%, ${alpha * 1.6})`
-        ctx!.fill()
+        c.beginPath()
+        c.arc(e.x, e.y, e.size * 0.55, 0, Math.PI * 2)
+        c.fillStyle = `hsla(${30 + e.hue}, 100%, 85%, ${alpha * 1.6})`
+        c.fill()
       }
 
       raf = requestAnimationFrame(tick)
