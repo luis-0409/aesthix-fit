@@ -27,46 +27,50 @@ export default function Hero() {
   return (
     <section className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-[#050505]">
 
-      {/* ── Background image (desktop) ─────────────────────────────── */}
-      {/* Salve a imagem como /public/hero-bg.jpg para ativar */}
+      {/* ── Background image desktop ───────────────────────────────── */}
       <div className="absolute inset-0 hidden md:block">
         <Image
           src="/hero-bg.jpg"
           alt=""
           fill
           priority
-          quality={90}
+          quality={92}
           className="object-cover object-center"
-          onError={() => {/* silently fallback to CSS bg */}}
         />
-        {/* Overlay multicamada para manter texto legível */}
+        {/* Overlay: esquerda escura p/ texto, direita aberta p/ ver arte */}
         <div
           className="absolute inset-0"
           style={{
             background: [
-              'linear-gradient(to right, rgba(5,5,5,0.92) 0%, rgba(5,5,5,0.65) 55%, rgba(5,5,5,0.30) 100%)',
-              'linear-gradient(to top,   rgba(5,5,5,0.98) 0%, transparent 40%)',
-              'linear-gradient(to bottom, rgba(5,5,5,0.85) 0%, transparent 20%)',
+              'linear-gradient(to right, rgba(5,5,5,0.88) 0%, rgba(5,5,5,0.50) 45%, rgba(5,5,5,0.10) 100%)',
+              'linear-gradient(to top,   rgba(5,5,5,0.95) 0%, transparent 35%)',
+              'linear-gradient(to bottom, rgba(5,5,5,0.70) 0%, transparent 18%)',
             ].join(', '),
           }}
         />
       </div>
 
-      {/* ── Background fallback / mobile: grid + glow ──────────────── */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage: `
-            linear-gradient(rgba(255,26,26,0.04) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255,26,26,0.04) 1px, transparent 1px)
-          `,
-          backgroundSize: '80px 80px',
-        }}
-      />
-      <div
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] pointer-events-none md:hidden"
-        style={{ background: 'radial-gradient(ellipse at center top, rgba(255,26,26,0.14) 0%, transparent 68%)' }}
-      />
+      {/* ── Background image mobile ────────────────────────────────── */}
+      <div className="absolute inset-0 block md:hidden">
+        <Image
+          src="/hero-bg-mobile.jpg"
+          alt=""
+          fill
+          priority
+          quality={92}
+          className="object-cover object-top"
+        />
+        {/* Overlay mobile: mais escuro em cima e embaixo, centro mais aberto */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background: [
+              'linear-gradient(to bottom, rgba(5,5,5,0.80) 0%, rgba(5,5,5,0.20) 35%, rgba(5,5,5,0.20) 65%, rgba(5,5,5,0.97) 100%)',
+              'linear-gradient(to right, rgba(5,5,5,0.60) 0%, rgba(5,5,5,0.10) 50%, rgba(5,5,5,0.10) 100%)',
+            ].join(', '),
+          }}
+        />
+      </div>
 
       {/* ── Left accent line ───────────────────────────────────────── */}
       <motion.div
@@ -77,23 +81,7 @@ export default function Hero() {
         style={{ background: 'linear-gradient(to bottom, #ff1a1a 0%, rgba(255,26,26,0.3) 50%, transparent 100%)' }}
       />
 
-      {/* ── Ghost "AX" — mobile only (hidden on desktop, bg image has it) ── */}
-      <div
-        className="absolute right-[-2vw] top-1/2 -translate-y-[55%] pointer-events-none select-none md:hidden"
-        aria-hidden
-      >
-        <span
-          className="font-anton leading-none"
-          style={{
-            fontSize: 'clamp(18rem, 28vw, 34rem)',
-            color: 'transparent',
-            WebkitTextStroke: '1px rgba(255,26,26,0.055)',
-            letterSpacing: '-0.04em',
-          }}
-        >
-          AX
-        </span>
-      </div>
+      {/* Ghost AX removido — ambas as imagens bg já têm o logo */}
 
       {/* ── Main content ───────────────────────────────────────────── */}
       <motion.div
