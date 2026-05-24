@@ -7,6 +7,7 @@ export interface Product {
   sizes: string[]
   colors: ProductColor[]
   featured: boolean
+  coming_soon?: boolean
   category?: string
   fabric_details?: string
   created_at: string

@@ -12,7 +12,7 @@ interface ProductGridProps {
   subtitle?: string
 }
 
-const CATEGORIES = ['Todos', 'Camisetas', 'Regatas', 'Moletons', 'Shorts']
+const CATEGORIES = ['Todos', 'Camisetas', 'Shorts']
 
 export default function ProductGrid({
   products,

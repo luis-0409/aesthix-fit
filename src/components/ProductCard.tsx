@@ -39,6 +39,50 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
     currency: 'BRL',
   })
 
+  // ── Coming Soon card ──────────────────────────────────────────
+  if (product.coming_soon) {
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-50px' }}
+        transition={{ duration: 0.6, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
+      >
+        <div className="card-dark overflow-hidden opacity-70 cursor-not-allowed select-none">
+          {/* Image container */}
+          <div className="relative aspect-[3/4] overflow-hidden bg-gray-900">
+            {/* Blur overlay */}
+            <div className="absolute inset-0 z-10 backdrop-blur-sm bg-black/50 flex flex-col items-center justify-center gap-3">
+              <span className="text-3xl">🔥</span>
+              <span className="font-anton text-white text-xl tracking-[0.2em] uppercase">Em Breve</span>
+              <span className="font-epilogue text-[10px] text-white/40 tracking-[0.25em] uppercase">Em lançamento</span>
+            </div>
+            {/* Blurred background image */}
+            <div className="absolute inset-0 flex items-center justify-center bg-gray-950">
+              <span className="font-anton text-6xl text-white/5">AF</span>
+            </div>
+          </div>
+          {/* Info */}
+          <div className="p-4">
+            <h3 className="font-epilogue text-sm font-semibold text-white/40 leading-tight mb-1">
+              {product.category}
+            </h3>
+            <p className="font-epilogue text-xs text-white/20 leading-relaxed mb-3">
+              Em breve 🔥
+            </p>
+            <div className="flex items-center justify-between">
+              <span className="font-anton text-sm tracking-wide text-white/20">
+                — — —
+              </span>
+            </div>
+          </div>
+          {/* Animated bottom line */}
+          <div className="h-px bg-gradient-to-r from-transparent via-red-DEFAULT/40 to-transparent animate-pulse" />
+        </div>
+      </motion.div>
+    )
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
