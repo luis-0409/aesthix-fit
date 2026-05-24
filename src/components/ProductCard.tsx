@@ -16,28 +16,14 @@ interface ProductCardProps {
 
 export default function ProductCard({ product, index = 0 }: ProductCardProps) {
   const [hovered,    setHovered]    = useState(false)
+  const [imgError,   setImgError]   = useState(false)
   const [quickAdded, setQuickAdded] = useState(false)
-  // Fallback: images[0] local → images[2] Unsplash; images[1] local → images[3] Unsplash
-  const [img1Fail,   setImg1Fail]   = useState(false)
-  const [img2Fail,   setImg2Fail]   = useState(false)
   const { addItem }                 = useCartStore()
   const router                      = useRouter()
 
   const primaryColor = product.colors[0]
   const primarySize  = product.sizes[0]
-
-  // Resolve srcs with automatic fallback
-  const src1 = img1Fail
-    ? (product.images[2] || '')   // Unsplash fallback
-    : (product.images[0] || '')   // local primary
-
-  const src2 = img2Fail
-    ? (product.images[3] || src1) // Unsplash fallback or same as primary
-    : (product.images[1] || src1) // local secondary
-
-  const imgError = img1Fail && !product.images[2]  // total failure only if no Unsplash
-  const image1   = src1
-  const image2   = src2
+  const image1       = product.images[0] || ''
 
   const handleQuickAdd = (e: React.MouseEvent) => {
     e.preventDefault()
@@ -123,30 +109,16 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
 
             {/* Image */}
             {!imgError && image1 ? (
-              <>
-                <Image
-                  src={image1}
-                  alt={product.name}
-                  fill
-                  sizes="(max-width: 768px) 50vw, 33vw"
-                  className={`object-cover transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-                    hovered && image2 !== image1 ? 'opacity-0 scale-105' : 'opacity-100 scale-100'
-                  }`}
-                  onError={() => setImg1Fail(true)}
-                />
-                {image2 && image2 !== image1 && (
-                  <Image
-                    src={image2}
-                    alt={`${product.name} — detalhe`}
-                    fill
-                    sizes="(max-width: 768px) 50vw, 33vw"
-                    className={`object-cover transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] absolute inset-0 ${
-                      hovered ? 'opacity-100 scale-100' : 'opacity-0 scale-105'
-                    }`}
-                    onError={() => setImg2Fail(true)}
-                  />
-                )}
-              </>
+              <Image
+                src={image1}
+                alt={product.name}
+                fill
+                sizes="(max-width: 768px) 50vw, 33vw"
+                className={`object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                  hovered ? 'scale-105' : 'scale-100'
+                }`}
+                onError={() => setImgError(true)}
+              />
             ) : (
               /* Placeholder */
               <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-950">
