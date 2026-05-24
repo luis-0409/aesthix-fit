@@ -1,6 +1,3 @@
-'use client'
-
-import { useMemo } from 'react'
 import Navbar from '@/components/Navbar'
 import Hero from '@/components/Hero'
 import BestSellers from '@/components/BestSellers'
@@ -9,16 +6,20 @@ import ComingSoon from '@/components/ComingSoon'
 import Manifesto from '@/components/Manifesto'
 import Footer from '@/components/Footer'
 import WhatsAppButton from '@/components/WhatsAppButton'
+import SparkParticles from '@/components/SparkParticles'
 import { DEMO_PRODUCTS } from '@/lib/config'
 import { Product } from '@/types'
 
 // In production, replace with server-side Supabase fetch.
 // For now, demo products are used so the site works without backend.
 export default function HomePage() {
-  const products = useMemo(() => DEMO_PRODUCTS as Product[], [])
+  const products = DEMO_PRODUCTS as unknown as Product[]
 
   return (
     <main className="min-h-screen bg-[#050505]">
+      {/* Faíscas de fogo no fundo — discretas, z-index 2 */}
+      <SparkParticles />
+
       <Navbar />
 
       {/* 1. Hero */}

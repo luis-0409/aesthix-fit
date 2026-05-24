@@ -27,6 +27,7 @@ export const SITE_META = {
 } as const
 
 // Produtos reais da AESTHIX FIT
+// Fotos: coloque os arquivos em /public/products/ conforme README.md
 export const DEMO_PRODUCTS = [
   {
     id: 'camiseta-the-king',
@@ -34,8 +35,8 @@ export const DEMO_PRODUCTS = [
     description: 'Leão de Judá. Oversized premium com estampa full-back exclusiva. "Behold, the Lion of the Tribe of Judah" — Revelation 5:5.',
     price: 219.90,
     images: [
-      'https://images.unsplash.com/photo-1562157873-818bc0726f68?w=800&q=80',
-      'https://images.unsplash.com/photo-1503341504253-dff4815485f1?w=800&q=80',
+      '/products/the-king-frente.jpg',
+      '/products/the-king-costas.jpg',
     ],
     sizes: ['P', 'M', 'G', 'GG'],
     colors: [
@@ -52,8 +53,8 @@ export const DEMO_PRODUCTS = [
     description: 'Feel the fear and do it anyway. That is the mentality. Even if you are scared, just do it. Estátua de guerreiro com chamas.',
     price: 199.90,
     images: [
-      'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=800&q=80',
-      'https://images.unsplash.com/photo-1527719327859-c6ce80353573?w=800&q=80',
+      '/products/mentality-frente.jpg',
+      '/products/mentality-costas.jpg',
     ],
     sizes: ['P', 'M', 'G', 'GG'],
     colors: [
@@ -70,8 +71,8 @@ export const DEMO_PRODUCTS = [
     description: 'Skull warrior no levantamento. Disciplina não é opção — é identidade. Estampa full-back com arte exclusiva.',
     price: 199.90,
     images: [
-      'https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=800&q=80',
-      'https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=800&q=80',
+      '/products/disciplina-frente.jpg',
+      '/products/disciplina-costas.jpg',
     ],
     sizes: ['P', 'M', 'G', 'GG'],
     colors: [
@@ -88,8 +89,8 @@ export const DEMO_PRODUCTS = [
     description: 'Coroa de espinhos em chamas. Arte gráfica intensa com referência bíblica. Para quem carrega fé e atitude.',
     price: 219.90,
     images: [
-      'https://images.unsplash.com/photo-1622519407650-3df9883f76a5?w=800&q=80',
-      'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&q=80',
+      '/products/messiah-frente.jpg',
+      '/products/messiah-costas.jpg',
     ],
     sizes: ['P', 'M', 'G', 'GG'],
     colors: [
@@ -106,8 +107,8 @@ export const DEMO_PRODUCTS = [
     description: 'Faltou carbo? Aumenta a poha do ódio. Death Potion. A camiseta mais honesta do seu treino.',
     price: 179.90,
     images: [
-      'https://images.unsplash.com/photo-1578587018452-892bacefd3f2?w=800&q=80',
-      'https://images.unsplash.com/photo-1516826957135-700dedafdef9?w=800&q=80',
+      '/products/faltou-carbo-preto-frente.jpg',
+      '/products/faltou-carbo-preto-costas.jpg',
     ],
     sizes: ['P', 'M', 'G', 'GG'],
     colors: [
@@ -124,8 +125,8 @@ export const DEMO_PRODUCTS = [
     description: 'Faltou carbo? Aumenta a poha do ódio. Death Potion. A camiseta mais honesta do seu treino. Versão branca.',
     price: 179.90,
     images: [
-      'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=800&q=80',
-      'https://images.unsplash.com/photo-1554568218-0f1715e72254?w=800&q=80',
+      '/products/faltou-carbo-branco-frente.jpg',
+      '/products/faltou-carbo-branco-costas.jpg',
     ],
     sizes: ['P', 'M', 'G', 'GG'],
     colors: [
@@ -141,9 +142,7 @@ export const DEMO_PRODUCTS = [
     name: 'Shorts AESTHIX FIT',
     description: 'Em breve. Aguarde o lançamento da linha de shorts da AESTHIX FIT. 🔥',
     price: 169.90,
-    images: [
-      'https://images.unsplash.com/photo-1539185441755-769473a23570?w=800&q=80',
-    ],
+    images: ['/products/shorts-preview.jpg'],
     sizes: ['P', 'M', 'G', 'GG'],
     colors: [
       { name: 'Preto', hex: '#050505' },
